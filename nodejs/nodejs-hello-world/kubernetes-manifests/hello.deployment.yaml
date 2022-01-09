@@ -17,9 +17,13 @@ spec:
       labels:
         app: nodejs-hello-world
     spec:
+      imagePullSecrets:
+      - name: regcred-ghcr
       containers:
         - name: server
           image: nodejs-hello-world
+          #image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world:1.0.4-appz
+          imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8080
           env:
