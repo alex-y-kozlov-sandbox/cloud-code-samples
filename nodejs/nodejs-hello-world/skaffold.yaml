@@ -2,17 +2,67 @@
 # https://skaffold.dev/docs/references/yaml/
 apiVersion: skaffold/v2beta19
 kind: Config
+requires:
+  - configs:
+    - path
 build:
-  tagPolicy:
-    sha256: {}
   artifacts:
   - context: .
-    image: nodejs-hello-world
+    image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world
+  local:
+    useDockerCLI: true      
+  tagPolicy:
+    # gitCommit: {}
+    # sha256: {}
+    envTemplate:
+      template: '{{or .SEM_VER "1.0.2"}}{{or .INSTRUMENTATION_LABEL "-appd"}}'
+      #template: '{{"1.0.1-appd"}}'
 deploy:
   kubectl:
     manifests:
     - kubernetes-manifests/**
+      # Using Helm as the deployment strategy
+  #helm:
+  #  # Pass the parameters according to https://skaffold.dev/docs/references/yaml/
+  #  releases:
+  #    - name: my-release
+  #      namespace: default
+  #      # Using Helm secrets plugin to process secrets before deploying
+  #      useHelmSecrets: true
+  #      # Location of the chart - here, we use a local chart
+  #      chartPath: ./charts/my-chart
+  #      # Path to the values file
+  #      valuesFiles:
+  #        - ./deployment/dev/values.yaml
+  #        - ./deployment/dev/secrets.yaml
+  #      skipBuildDependencies: true
+  #      artifactOverrides:
+  #        image: asia.gcr.io/my-project/my-image
+  #      imageStrategy:
+  #        helm: {}
+  #  flags:
+  #    upgrade:
+  #      - --install
+
 profiles:
+- name: kaniko
+  # See https://skaffold.dev/docs/pipeline-stages/builders/#in-cluster-build
+  activation:
+  - env: SK_PROFILE=kaniko
+  build:
+    cluster:
+      pullSecretPath: ./kaniko/regcred-ghcr.json
+      pullSecretName: regcred-1
+      dockerConfig:
+        # path: ./kaniko/regcred-ghcr.json
+        secretName: regcred-2
+      namespace: kaniko
+      timeout: 5m
+      concurrency: 0   
+  deploy:
+    kubectl:
+      manifests:
+      - kubernetes-manifests/**
 - name: cloudbuild
   build:
     googleCloudBuild: {}
