@@ -8,7 +8,8 @@ requires:
 build:
   artifacts:
   - context: .
-    image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world
+    image: nodejs-hello-world
+    #image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world
   local:
     useDockerCLI: true      
   tagPolicy:
