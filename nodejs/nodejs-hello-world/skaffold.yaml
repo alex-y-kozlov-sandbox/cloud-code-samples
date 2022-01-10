@@ -24,6 +24,7 @@ deploy:
     - kubernetes-manifests/**
       # Using Helm as the deployment strategy
   #helm:
+  #
   #  # Pass the parameters according to https://skaffold.dev/docs/references/yaml/
   #  releases:
   #    - name: my-release
