@@ -8,7 +8,8 @@ requires:
 build:
   artifacts:
   - context: .
-    image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world
+    image: nodejs-hello-world
+    #image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world
   local:
     useDockerCLI: true      
   tagPolicy:
@@ -23,6 +24,7 @@ deploy:
     - kubernetes-manifests/**
       # Using Helm as the deployment strategy
   #helm:
+  #
   #  # Pass the parameters according to https://skaffold.dev/docs/references/yaml/
   #  releases:
   #    - name: my-release

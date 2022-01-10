@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "name": "Kubernetes: Run/Debug - kaniko",
+            "type": "cloudcode.kubernetes",
+            "request": "launch",
+            "skaffoldConfig": "${workspaceFolder}/nodejs/nodejs-hello-world/skaffold.yaml",
+            "profile": "kaniko",
+            "watch": true,
+            "cleanUp": true,
+            "portForward": true
+        }
+    ]
+}

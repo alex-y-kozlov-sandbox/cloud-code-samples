@@ -21,6 +21,7 @@ spec:
       - name: regcred-ghcr
       containers:
         - name: server
+          #image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world
           image: nodejs-hello-world
           #image: ghcr.io/alex-y-kozlov-sandbox/cloud-code-samples/nodejs-hello-world:1.0.4-appz
           imagePullPolicy: IfNotPresent
